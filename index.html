@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>Vincent · My Life in Code</title>
+<meta name='description' content='Everything I have built, as one living constellation.'>
+<meta name='theme-color' content='#070b1a'>
+<link rel='icon' href='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E✨%3C/text%3E%3C/svg%3E'>
+<style>
+:root{--bg:#070b1a;--ink:#eaf0ff;--mut:#9fb0d8;--glass:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--gold:#ffd89a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.5}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(90px);opacity:.33;animation:drift 22s ease-in-out infinite alternate}
+.aurora i:nth-child(1){background:#6d28d9;left:-15%;top:-20%}
+.aurora i:nth-child(2){background:#0891b2;right:-20%;top:10%;animation-delay:-7s}
+.aurora i:nth-child(3){background:#be185d;left:20%;bottom:-30%;animation-delay:-13s}
+@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:12px 22px;background:rgba(7,11,26,.6);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav b{letter-spacing:.14em;font-size:.85rem;color:var(--gold)}
+nav a{color:var(--mut);text-decoration:none;font-size:.9rem;margin-left:16px;transition:.2s}
+nav a:hover{color:#fff}
+main{position:relative;z-index:1}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:110px 20px 60px}
+.badge{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);padding:7px 16px;border-radius:99px;background:var(--glass)}
+h1{font-size:clamp(2.8rem,10vw,6.4rem);line-height:1.02;font-weight:800;margin:24px 0 10px;background:linear-gradient(90deg,#a78bfa,#5eead4,#ffd89a,#ff7ab0,#a78bfa);background-size:300% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 9s linear infinite}
+@keyframes shine{to{background-position:300% center}}
+.tag{font-size:1.15rem;color:var(--mut);font-style:italic}
+.roles{min-height:1.8em;margin-top:18px;font-size:1.1rem;color:#cfe0ff}
+.cur{display:inline-block;width:2px;height:1.05em;background:#cfe0ff;margin-left:3px;vertical-align:-3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:42px}
+.stat{min-width:130px;padding:16px 20px;border-radius:18px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px)}
+.stat b{display:block;font-size:2rem;color:#fff}
+.stat span{font-size:.78rem;color:var(--mut);letter-spacing:.08em;text-transform:uppercase}
+.cue{margin-top:46px;color:var(--mut);font-size:.9rem;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(8px)}}
+section{padding:80px 0 20px}
+h2{font-size:clamp(1.7rem,4vw,2.4rem);margin-bottom:6px}
+.sub{color:var(--mut);margin-bottom:26px}
+.uni{position:relative;border-radius:26px;border:1px solid var(--line);background:radial-gradient(900px 400px at 50% 50%,rgba(255,255,255,.05),rgba(255,255,255,.01));overflow:hidden}
+canvas{display:block;width:100%;height:580px;cursor:default}
+.tip{position:absolute;pointer-events:none;opacity:0;transform:translate(-50%,-120%);background:rgba(10,14,34,.92);border:1px solid var(--line);padding:8px 12px;border-radius:12px;font-size:.85rem;white-space:nowrap;transition:opacity .15s;z-index:3}
+.tip small{display:block;color:var(--mut)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;border:1px solid var(--line);background:var(--glass);color:var(--ink);font-size:.88rem;cursor:pointer;transition:.2s}
+.chip:hover{transform:translateY(-2px)}
+.chip.on{background:var(--c,#fff);color:#0a0e22;border-color:transparent;font-weight:600}
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:22px}
+.search{flex:1;min-width:200px;max-width:320px;padding:10px 16px;border-radius:99px;border:1px solid var(--line);background:var(--glass);color:var(--ink);font:inherit;outline:none}
+.search:focus{border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{position:relative;padding:22px;border-radius:20px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px);cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;right:0;height:3px;background:var(--c)}
+.card:hover{transform:translateY(-6px);border-color:var(--c);box-shadow:0 18px 40px rgba(0,0,0,.4),0 0 30px -10px var(--c)}
+.card .em{font-size:1.9rem}
+.card h3{font-size:1.15rem;margin:8px 0 6px}
+.card p{color:var(--mut);font-size:.92rem;min-height:3.2em}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;font-size:.75rem}
+.pill{padding:3px 10px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+.pill.live{color:#86efac;border-color:rgba(134,239,172,.4)}
+.btns{display:flex;gap:10px;margin-top:16px}
+.b{flex:1;text-align:center;text-decoration:none;font-size:.85rem;padding:9px 12px;border-radius:12px;border:1px solid var(--line);color:var(--ink);transition:.2s;background:transparent;cursor:pointer;font-family:inherit}
+.b:hover{background:rgba(255,255,255,.1)}
+.b.p{background:var(--c);color:#0a0e22;font-weight:700;border-color:transparent}
+.empty{text-align:center;color:var(--mut);padding:40px}
+.tl{position:relative;margin-top:20px;padding-left:34px}
+.tl::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(var(--line),rgba(255,255,255,.35),var(--line))}
+.mo{margin:26px 0 10px;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.ev{position:relative;padding:16px 18px;border-radius:16px;background:var(--glass);border:1px solid var(--line);margin-bottom:12px;opacity:0;transform:translateX(-22px);transition:.6s;cursor:pointer}
+.ev.in{opacity:1;transform:none}
+.ev::before{content:'';position:absolute;left:-31px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--bg),0 0 14px var(--c)}
+.ev b{display:block}
+.ev span{color:var(--mut);font-size:.9rem}
+footer{text-align:center;padding:90px 20px 50px;color:var(--mut)}
+footer .big{font-size:1.5rem;color:#fff;font-style:italic;margin-bottom:10px}
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:rgba(4,6,16,.72);backdrop-filter:blur(8px);padding:20px}
+.modal.on{display:flex;animation:fi .25s}
+@keyframes fi{from{opacity:0}}
+.box{position:relative;max-width:480px;width:100%;padding:30px;border-radius:24px;background:#10152e;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px -20px var(--c)}
+.box h3{font-size:1.5rem;margin:10px 0}
+.box p{color:var(--mut)}
+.x{position:absolute;right:16px;top:12px;background:none;border:0;color:var(--mut);font-size:1.5rem;cursor:pointer}
+.facts{margin:16px 0;font-size:.9rem;color:#cfe0ff;line-height:1.9}
+@media(max-width:640px){canvas{height:460px}nav a{margin-left:10px;font-size:.8rem}}
+</style>
+</head>
+<body>
+<div class='aurora'><i></i><i></i><i></i></div>
+<nav><b>VINCENT</b><div><a href='#universe'>Universe</a><a href='#projects'>Projects</a><a href='#story'>Story</a></div></nav>
+<main>
+<header class='hero'>
+  <span class='badge'>My life, in code</span>
+  <h1>Vincent</h1>
+  <p class='tag'>A boy with a big God.</p>
+  <div class='roles'><span id='role'></span><span class='cur'></span></div>
+  <div class='stats' id='stats'></div>
+  <div class='cue'>scroll to explore my universe ↓</div>
+</header>
+
+<div class='wrap'>
+<section id='universe'>
+  <h2>✨ The Universe</h2>
+  <p class='sub'>Every project is a star. Hover to peek, tap to open. Each constellation is a part of my life.</p>
+  <div class='uni'><canvas id='cv'></canvas><div class='tip' id='tip'></div></div>
+  <div class='legend' id='legend'></div>
+</section>
+
+<section id='projects'>
+  <h2>🚀 Everything I Have Built</h2>
+  <p class='sub'>Filter by part of life, or search by name.</p>
+  <div class='tools'><div class='legend' style='margin:0;justify-content:flex-start' id='chips'></div><input class='search' id='q' placeholder='Search projects...'></div>
+  <div class='grid' id='grid'></div>
+</section>
+
+<section id='story'>
+  <h2>📖 The Story So Far</h2>
+  <p class='sub'>Every project is a chapter, in the order I wrote them.</p>
+  <div class='tl' id='tl'></div>
+</section>
+</div>
+
+<footer>
+  <div class='big'>Still building. Still learning. Still grateful.</div>
+  <p>Made with ❤️ and curiosity in Accra, Ghana · <a style='color:var(--gold)' href='https://github.com/VincentAkwas'>github.com/VincentAkwas</a></p>
+  <p style='margin-top:8px;font-size:.8rem'>This page updates itself from my GitHub, so new projects appear automatically.</p>
+</footer>
+</main>
+
+<div class='modal' id='modal'><div class='box' id='box'><button class='x' id='close'>×</button><div id='mc'></div></div></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const USER='VincentAkwas';
+const CATS={
+  lab:{name:'Lab & Science',emoji:'🧪',color:'#5eead4'},
+  mind:{name:'Mind & Purpose',emoji:'🧠',color:'#c4b5fd'},
+  love:{name:'Love & Celebration',emoji:'💖',color:'#ff7ab0'},
+  build:{name:'Business & Builds',emoji:'🚀',color:'#fbbf24'},
+  learn:{name:'Learning',emoji:'📚',color:'#7dd3fc'}
+};
+const ROLES=['Medical Laboratory Science student','Self-taught web developer','Builder of useful tools','Writer at LabLens Hub','Always learning, always shipping'];
+// name, category, title, description, created, language, hasPages (fallback; refreshed live from GitHub)
+const REPOS=[
+ ['An-educational-Python-project-for-learning-lab-result-interpretation.','learn','Lab Result Interpreter (Python)','A simple Python tool for checking medical laboratory test values against standard reference ranges.','2026-02-06','Python',0],
+ ['An-educational-Python-project-for-learning-lab-result-interpretation','learn','Lab Interpretation Practice','An educational Python project for learning lab result interpretation.','2026-02-08','Python',0],
+ ['lablens','lab','LabLens','A medical lab result interpreter that makes sense of numbers on a lab report.','2026-03-12','HTML',1],
+ ['LAB-INTRO','lab','Lab Basics','Know your basic lab results, a friendly introduction.','2026-03-13','HTML',0],
+ ['VincentAkwas.github.io','build','My Home on the Web','A boy with a big God. The home page of everything I make.','2026-03-14','HTML',1],
+ ['anonymous-chat','build','Anonymous Chat','A simple space to chat without revealing who you are.','2026-04-21','HTML',0],
+ ['mls-daily','lab','MLS Daily','A daily case-challenge platform for Medical Laboratory Science.','2026-04-21','HTML',1],
+ ['psycheprofile','mind','PsycheProfile','A psychometric personality web app that maps who you are.','2026-04-30','HTML',1],
+ ['portfolio','build','Portfolio','My professional portfolio.','2026-05-07','HTML',0],
+ ['kairos-compass','mind','Kairos Compass','Kairos means the right moment. A compass for purpose and direction.','2026-05-11','HTML',0],
+ ['polygraph-pulse','mind','Polygraph Pulse','A psychometric quiz with a live trace that profiles truth and pressure responses.','2026-05-11','HTML',0],
+ ['wish','love','Wish','A birthday wishing platform, made to make people feel remembered.','2026-05-19','HTML',0],
+ ['wishwave','love','WishWave','Waves of birthday wishes, delivered on time.','2026-05-19','',0],
+ ['research','lab','Research','Notes and work for my research journey.','2026-05-26','',0],
+ ['methodology','lab','StatLab Pro','An SPSS-style research statistics dashboard in the browser.','2026-05-26','HTML',1],
+ ['chatcart-stores','build','ChatCart Stores','Simple chat-based catalog stores for small businesses.','2026-11-11','HTML',0],
+ ['bookly','build','Bookly','An appointment booking project that makes scheduling effortless.','2026-11-18','HTML',0],
+ ['forensic-science-101','learn','Forensic Science 101','A study app built from my forensic science course.','2026-11-21','HTML',0],
+ ['Sarah','love','Sarah','A love letter written in code, with memories and a little game.','2026-11-26','HTML',1]
+].map(a=>({name:a[0],cat:a[1],title:a[2],desc:a[3],created:a[4],lang:a[5],pages:!!a[6],pushed:a[4]}));
+
+function liveUrl(r){return r.name.toLowerCase()===USER.toLowerCase()+'.github.io'?'https://'+USER.toLowerCase()+'.github.io/':'https://'+USER.toLowerCase()+'.github.io/'+encodeURIComponent(r.name)+'/'}
+function codeUrl(r){return 'https://github.com/'+USER+'/'+encodeURIComponent(r.name)}
+function fmt(d){return new Date(d).toLocaleDateString('en',{month:'short',year:'numeric'})}
+function fmtFull(d){return new Date(d).toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'})}
+function pretty(n){return n.replace(/[-_.]+/g,' ').trim().replace(/\b\w/g,c=>c.toUpperCase())}
+function hash(s){let h=7;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%1000003;return h}
+function rnd(seed){let s=seed;return()=>{s=(s*9301+49297)%233280;return s/233280}}
+
+let filter='all',query='';
+
+// ----- roles typing -----
+(function(){let i=0,c=0,d=false;const el=$('#role');(function t(){const s=ROLES[i];el.textContent=s.slice(0,c);if(!d&&c<s.length){c++;setTimeout(t,55)}else if(!d){d=true;setTimeout(t,1700)}else if(c>0){c--;setTimeout(t,25)}else{d=false;i=(i+1)%ROLES.length;setTimeout(t,250)}})()})();
+
+// ----- stats -----
+function renderStats(){
+  const first=Math.min(...REPOS.map(r=>+new Date(r.created)));
+  const months=Math.max(1,Math.round((Date.now()-first)/2629800000));
+  const live=REPOS.filter(r=>r.pages).length;
+  const langs=new Set(REPOS.map(r=>r.lang).filter(Boolean)).size;
+  const items=[[REPOS.length,'Projects'],[live,'Live sites'],[months,'Months building'],[langs,'Languages']];
+  const box=$('#stats');box.innerHTML='';
+  items.forEach(([n,l])=>{
+    const d=document.createElement('div');d.className='stat';d.innerHTML='<b>0</b><span>'+l+'</span>';box.appendChild(d);
+    const b=d.querySelector('b');let v=0;const step=Math.max(1,Math.ceil(n/30));
+    const iv=setInterval(()=>{v=Math.min(n,v+step);b.textContent=v;if(v>=n)clearInterval(iv)},35);
+  });
+}
+
+// ----- legend/chips -----
+function renderChips(){
+  const mk=(id,label,color)=>{const c=document.createElement('button');c.className='chip'+(filter===id?' on':'');c.style.setProperty('--c',color);c.textContent=label;c.onclick=()=>{filter=id;renderChips();renderGrid();renderTimeline();draw.dirty=true};return c};
+  const chips=$('#chips');chips.innerHTML='';
+  chips.appendChild(mk('all','All','#ffffff'));
+  Object.entries(CATS).forEach(([k,v])=>chips.appendChild(mk(k,v.emoji+' '+v.name,v.color)));
+  const lg=$('#legend');lg.innerHTML='';
+  Object.entries(CATS).forEach(([k,v])=>{const c=document.createElement('span');c.className='chip';c.style.borderColor=v.color;c.innerHTML='<span style="width:9px;height:9px;border-radius:50%;background:'+v.color+';display:inline-block"></span> '+v.name+' <small style="color:var(--mut)">'+REPOS.filter(r=>r.cat===k).length+'</small>';lg.appendChild(c)});
+}
+
+// ----- grid -----
+function visible(){return REPOS.filter(r=>(filter==='all'||r.cat===filter)&&(!query||(r.title+' '+r.desc+' '+r.name).toLowerCase().includes(query)))}
+function renderGrid(){
+  const g=$('#grid');g.innerHTML='';
+  const list=visible().sort((a,b)=>new Date(b.pushed)-new Date(a.pushed));
+  if(!list.length){g.innerHTML='<div class="empty">No stars match that search yet ✨</div>';return}
+  list.forEach(r=>{
+    const c=CATS[r.cat],d=document.createElement('div');d.className='card';d.style.setProperty('--c',c.color);
+    d.innerHTML='<div class="em">'+c.emoji+'</div><h3>'+r.title+'</h3><p>'+r.desc+'</p><div class="meta"><span class="pill">'+fmt(r.created)+'</span>'+(r.lang?'<span class="pill">'+r.lang+'</span>':'')+(r.pages?'<span class="pill live">● live</span>':'')+'</div><div class="btns">'+(r.pages?'<a class="b p" target="_blank" rel="noopener" href="'+liveUrl(r)+'">Open</a>':'')+'<a class="b" target="_blank" rel="noopener" href="'+codeUrl(r)+'">Code</a></div>';
+    d.addEventListener('click',e=>{if(!e.target.closest('a'))openModal(r)});
+    g.appendChild(d);
+  });
+}
+$('#q').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();renderGrid();renderTimeline()});
+
+// ----- timeline -----
+let io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+function renderTimeline(){
+  const tl=$('#tl');tl.innerHTML='';let last='';
+  visible().sort((a,b)=>new Date(a.created)-new Date(b.created)).forEach(r=>{
+    const m=new Date(r.created).toLocaleDateString('en',{month:'long',year:'numeric'});
+    if(m!==last){last=m;const h=document.createElement('div');h.className='mo';h.textContent=m;tl.appendChild(h)}
+    const c=CATS[r.cat],e=document.createElement('div');e.className='ev';e.style.setProperty('--c',c.color);
+    e.innerHTML='<b>'+c.emoji+' '+r.title+'</b><span>'+r.desc+'</span>';
+    e.onclick=()=>openModal(r);tl.appendChild(e);io.observe(e);
+  });
+}
+
+// ----- modal -----
+function openModal(r){
+  const c=CATS[r.cat];$('#box').style.setProperty('--c',c.color);
+  $('#mc').innerHTML='<span class="pill" style="color:'+c.color+';border-color:'+c.color+'">'+c.emoji+' '+c.name+'</span><h3>'+r.title+'</h3><p>'+r.desc+'</p><div class="facts">📅 Started: '+fmtFull(r.created)+'<br>🛠️ Last updated: '+fmtFull(r.pushed)+(r.lang?'<br>💻 Built with: '+r.lang:'')+'<br>'+(r.pages?'🟢 Live on the web':'⚪ Code only for now')+'</div><div class="btns">'+(r.pages?'<a class="b p" style="--c:'+c.color+'" target="_blank" rel="noopener" href="'+liveUrl(r)+'">Open the app</a>':'')+'<a class="b" target="_blank" rel="noopener" href="'+codeUrl(r)+'">View code</a></div>';
+  $('#modal').classList.add('on');
+}
+$('#close').onclick=()=>$('#modal').classList.remove('on');
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')});
+addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('on')});
+
+// ----- constellation -----
+const cv=$('#cv'),ctx=cv.getContext('2d'),tip=$('#tip');
+let nodes=[],hubs=[],W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2),hover=null,mouse={x:-999,y:-999};
+function draw(){}
+draw.dirty=true;
+function layout(){
+  W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+  const keys=Object.keys(CATS),cx=W/2,cy=H/2,rx=W*.33,ry=H*.31;
+  const times=REPOS.map(r=>+new Date(r.created)),mn=Math.min(...times),mx=Math.max(...times);
+  hubs=keys.map((k,i)=>{const a=-Math.PI/2+i*2*Math.PI/keys.length;return{k,x:cx+Math.cos(a)*rx,y:cy+Math.sin(a)*ry,a}});
+  nodes=[];
+  hubs.forEach(h=>{
+    const items=REPOS.filter(r=>r.cat===h.k);
+    items.forEach((r,j)=>{
+      const R=rnd(hash(r.name)),ang=h.a+(j/Math.max(1,items.length))*Math.PI*2+R(),m=Math.min(W,H);
+      const dist=m*.09+R()*m*.08+items.length*3;
+      const rec=mx===mn?1:(new Date(r.created)-mn)/(mx-mn);
+      nodes.push({r,h,bx:h.x+Math.cos(ang)*dist,by:h.y+Math.sin(ang)*dist,ph:R()*6.28,x:0,y:0,rad:5+rec*6});
+    });
+  });
+}
+function frame(now){
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H/2;
+  const g=ctx.createRadialGradient(cx,cy,0,cx,cy,80);g.addColorStop(0,'rgba(255,240,200,.95)');g.addColorStop(.2,'rgba(255,216,154,.4)');g.addColorStop(1,'rgba(255,216,154,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,80,0,7);ctx.fill();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,5+Math.sin(now/500)*1.2,0,7);ctx.fill();
+  ctx.font='600 11px system-ui';ctx.textAlign='center';ctx.fillStyle='rgba(255,240,210,.9)';ctx.fillText('VINCENT',cx,cy+24);
+  hubs.forEach(h=>{
+    const c=CATS[h.k],dim=filter!=='all'&&filter!==h.k;
+    ctx.globalAlpha=dim?.15:1;
+    ctx.strokeStyle='rgba(255,255,255,.12)';ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(h.x,h.y);ctx.stroke();
+    ctx.fillStyle=c.color;ctx.shadowColor=c.color;ctx.shadowBlur=18;ctx.beginPath();ctx.arc(h.x,h.y,9,0,7);ctx.fill();ctx.shadowBlur=0;
+    ctx.fillStyle='#fff';ctx.font='600 12px system-ui';ctx.fillText(c.emoji+' '+c.name,h.x,h.y-18);
+    ctx.globalAlpha=1;
+  });
+  hover=null;let best=1e9;
+  nodes.forEach(n=>{
+    n.x=n.bx+Math.sin(now/1700+n.ph)*7;n.y=n.by+Math.cos(now/2100+n.ph)*7;
+    const d=Math.hypot(mouse.x-n.x,mouse.y-n.y);if(d<n.rad+14&&d<best){best=d;hover=n}
+  });
+  nodes.forEach(n=>{
+    const c=CATS[n.r.cat].color,dim=filter!=='all'&&filter!==n.r.cat,hot=hover===n;
+    ctx.globalAlpha=dim?.12:1;
+    ctx.strokeStyle=c;ctx.globalAlpha*=hot?.9:.28;ctx.lineWidth=hot?1.6:1;
+    ctx.beginPath();ctx.moveTo(n.h.x,n.h.y);ctx.lineTo(n.x,n.y);ctx.stroke();
+    ctx.lineWidth=1;ctx.globalAlpha=dim?.12:1;
+    ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=hot?30:14;
+    ctx.beginPath();ctx.arc(n.x,n.y,n.rad*(hot?1.5:1)*(1+Math.sin(now/600+n.ph)*.08),0,7);ctx.fill();ctx.shadowBlur=0;
+    if(n.r.pages){ctx.strokeStyle='#fff';ctx.globalAlpha*=.7;ctx.beginPath();ctx.arc(n.x,n.y,n.rad+4,0,7);ctx.stroke()}
+    ctx.globalAlpha=1;
+  });
+  if(hover){
+    tip.style.opacity=1;tip.style.left=hover.x+'px';tip.style.top=(hover.y-hover.rad)+'px';
+    tip.innerHTML='<b>'+CATS[hover.r.cat].emoji+' '+hover.r.title+'</b><small>'+fmt(hover.r.created)+(hover.r.pages?' · live':'')+'</small>';
+    cv.style.cursor='pointer';
+  }else{tip.style.opacity=0;cv.style.cursor='default'}
+  requestAnimationFrame(frame);
+}
+function pos(e){const b=cv.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:p.clientX-b.left,y:p.clientY-b.top}}
+cv.addEventListener('mousemove',e=>{mouse=pos(e)});
+cv.addEventListener('mouseleave',()=>{mouse={x:-999,y:-999}});
+cv.addEventListener('click',e=>{mouse=pos(e);setTimeout(()=>{if(hover)openModal(hover.r)},30)});
+cv.addEventListener('touchstart',e=>{mouse=pos(e)},{passive:true});
+addEventListener('resize',layout);
+
+// ----- build everything -----
+function renderAll(){renderStats();renderChips();renderGrid();renderTimeline();layout()}
+renderAll();requestAnimationFrame(frame);
+
+// ----- live sync with GitHub (new repos show up on their own) -----
+fetch('https://api.github.com/users/'+USER+'/repos?per_page=100&sort=updated').then(r=>r.ok?r.json():Promise.reject()).then(list=>{
+  list.filter(a=>!a.fork).forEach(a=>{
+    let r=REPOS.find(x=>x.name===a.name);
+    if(!r){r={name:a.name,cat:a.language==='Python'?'learn':'build',title:pretty(a.name),desc:a.description||'A new project, still taking shape.',created:a.created_at,lang:a.language||'',pages:false,pushed:a.pushed_at};REPOS.push(r)}
+    r.pages=!!a.has_pages;r.pushed=a.pushed_at||r.pushed;if(a.language)r.lang=a.language;
+  });
+  renderAll();
+}).catch(()=>{});
+</script>
+</body>
+</html>
