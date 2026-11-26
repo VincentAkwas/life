@@ -145,28 +145,28 @@ const CATS={
 const ROLES=['Medical Laboratory Science student','Self-taught web developer','Builder of useful tools','Writer at LabLens Hub','Always learning, always shipping'];
 // name, category, title, description, created, language, hasPages (fallback; refreshed live from GitHub)
 const REPOS=[
- ['An-educational-Python-project-for-learning-lab-result-interpretation.','learn','Lab Result Interpreter (Python)','A simple Python tool for checking medical laboratory test values against standard reference ranges.','2026-02-06','Python',0],
- ['An-educational-Python-project-for-learning-lab-result-interpretation','learn','Lab Interpretation Practice','An educational Python project for learning lab result interpretation.','2026-02-08','Python',0],
+ ['lab-result-interpreter','learn','Lab Result Interpreter (Python)','A Python command-line tool that checks CBC, BMP and lipid results against reference ranges, with tests. Educational only.','2026-02-06','Python',0],
+ ['lab-result-interpreter-draft','learn','Lab Interpreter (Early Draft)','The first package skeleton of the lab result interpreter.','2026-02-08','Python',0],
  ['lablens','lab','LabLens','A medical lab result interpreter that makes sense of numbers on a lab report.','2026-03-12','HTML',1],
- ['LAB-INTRO','lab','Lab Basics','Know your basic lab results, a friendly introduction.','2026-03-13','HTML',0],
+ ['LAB-INTRO','lab','Lab Basics','Know your basic lab results, a friendly introduction.','2026-03-13','HTML',1],
  ['VincentAkwas.github.io','build','My Home on the Web','A boy with a big God. The home page of everything I make.','2026-03-14','HTML',1],
- ['anonymous-chat','build','Anonymous Chat','A simple space to chat without revealing who you are.','2026-04-21','HTML',0],
+ ['anonymous-chat','build','Anonymous Chat','A simple space to chat without revealing who you are.','2026-04-21','HTML',1],
  ['mls-daily','lab','MLS Daily','A daily case-challenge platform for Medical Laboratory Science.','2026-04-21','HTML',1],
  ['psycheprofile','mind','PsycheProfile','A psychometric personality web app that maps who you are.','2026-04-30','HTML',1],
- ['portfolio','build','Portfolio','My professional portfolio.','2026-05-07','HTML',0],
- ['kairos-compass','mind','Kairos Compass','Kairos means the right moment. A compass for purpose and direction.','2026-05-11','HTML',0],
- ['polygraph-pulse','mind','Polygraph Pulse','A psychometric quiz with a live trace that profiles truth and pressure responses.','2026-05-11','HTML',0],
- ['wish','love','Wish','A birthday wishing platform, made to make people feel remembered.','2026-05-19','HTML',0],
+ ['portfolio','build','Portfolio','My professional portfolio.','2026-05-07','HTML',1],
+ ['kairos-compass','mind','Kairos Compass','Kairos means the right moment. A compass for purpose and direction.','2026-05-11','HTML',1],
+ ['polygraph-pulse','mind','Polygraph Pulse','A psychometric quiz with a live trace that profiles truth and pressure responses.','2026-05-11','HTML',1],
+ ['wish','love','Wish','A birthday wishing platform, made to make people feel remembered.','2026-05-19','HTML',1],
  ['wishwave','love','WishWave','Waves of birthday wishes, delivered on time.','2026-05-19','',0],
  ['research','lab','Research','Notes and work for my research journey.','2026-05-26','',0],
  ['methodology','lab','StatLab Pro','An SPSS-style research statistics dashboard in the browser.','2026-05-26','HTML',1],
- ['chatcart-stores','build','ChatCart Stores','Simple chat-based catalog stores for small businesses.','2026-11-11','HTML',0],
- ['bookly','build','Bookly','An appointment booking project that makes scheduling effortless.','2026-11-18','HTML',0],
- ['forensic-science-101','learn','Forensic Science 101','A study app built from my forensic science course.','2026-11-21','HTML',0],
+ ['chatcart-stores','build','ChatCart Stores','Simple chat-based catalog stores for small businesses.','2026-11-11','HTML',1],
+ ['bookly','build','Bookly','An appointment booking project that makes scheduling effortless.','2026-11-18','HTML',1],
+ ['forensic-science-101','learn','Forensic Science 101','A study app built from my forensic science course.','2026-11-21','HTML',1],
  ['Sarah','love','Sarah','A love letter written in code, with memories and a little game.','2026-11-26','HTML',1]
 ].map(a=>({name:a[0],cat:a[1],title:a[2],desc:a[3],created:a[4],lang:a[5],pages:!!a[6],pushed:a[4]}));
 
-function liveUrl(r){return r.name.toLowerCase()===USER.toLowerCase()+'.github.io'?'https://'+USER.toLowerCase()+'.github.io/':'https://'+USER.toLowerCase()+'.github.io/'+encodeURIComponent(r.name)+'/'}
+function liveUrl(r){if(r.name==='chatcart-stores')return 'https://'+USER.toLowerCase()+'.github.io/chatcart-stores/GLOW/';return r.name.toLowerCase()===USER.toLowerCase()+'.github.io'?'https://'+USER.toLowerCase()+'.github.io/':'https://'+USER.toLowerCase()+'.github.io/'+encodeURIComponent(r.name)+'/'}
 function codeUrl(r){return 'https://github.com/'+USER+'/'+encodeURIComponent(r.name)}
 function fmt(d){return new Date(d).toLocaleDateString('en',{month:'short',year:'numeric'})}
 function fmtFull(d){return new Date(d).toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'})}
